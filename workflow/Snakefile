@@ -1,0 +1,6 @@
+include: "rules/flames.smk"
+include: "rules/output.smk"
+
+rule all:
+    input:
+        get_final_output()

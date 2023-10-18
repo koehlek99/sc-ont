@@ -1,0 +1,2 @@
+sample,fastq_dir,shortread_bcs
+COVID3,/sc-projects/sc-proj-dh-promethion/singlecell_10x/COVID_basecalling_kit14/COVID3/pass_COVID3,test_100bcs.tsv

@@ -1,0 +1,11 @@
+name: flames
+channels: 
+  - bioconda
+  - conda-forge
+dependencies: 
+  - python=3.8
+  - samtools 
+  - pysam
+  - minimap2
+  - numpy
+  - editdistance
