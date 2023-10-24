@@ -1,2 +1,3 @@
 sample,fastq_dir,shortread_bcs
-COVID3,/sc-projects/sc-proj-dh-promethion/singlecell_10x/COVID_basecalling_kit14/COVID3/pass_COVID3,test_100bcs.tsv
+COVID4,/raid/users/krisi/sc-ont/data/pass_COVID4,/raid/users/krisi/sc-ont/data/top50_barcodes_COVID4.tsv
+COVID5,/raid/users/krisi/sc-ont/data/pass_COVID5,/raid/users/krisi/sc-ont/data/top50_barcodes_COVID5.tsv

@@ -23,4 +23,39 @@ def get_final_output():
             EDIST=config["edit_distance"]
         ),
     ),
+    final_output.extend(
+        expand("results/FLAMES/sc_long_pipeline/ed{EDIST}/{SAMPLE}/isoform_annotated.filtered.gff3",
+            SAMPLE=samples["sample"],
+            EDIST=config["edit_distance"]
+        ),
+    ),
+    final_output.extend(
+         expand("results/gffcompare/gtfList.txt"),
+    ),
+    final_output.extend(
+        expand("results/gffcompare/ed{EDIST}/mergedIsoforms.tracking",
+        EDIST=config["edit_distance"]
+        ),
+    ),
+    final_output.extend(
+        expand("results/gffcompare/ed{EDIST}/mergedIsoforms.combined.gtf",
+            EDIST=config["edit_distance"]        
+        ),
+    ),
+    final_output.extend(
+        expand("results/gffcompare/ed{EDIST}/gffcompare.log",
+            EDIST=config["edit_distance"]
+        ),
+    ),
+    final_output.extend(
+        expand("results/gffcompare/ed{EDIST}/duplicates/",
+            EDIST=config["edit_distance"]
+        ),
+    ),
+    final_output.extend(
+        expand("results/gffcompare/ed{EDIST}/collapsedExpressionMatrices.rds",
+            EDIST=config["edit_distance"]
+        ),
+    ),
+    
     return final_output

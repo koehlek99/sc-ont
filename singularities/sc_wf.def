@@ -1,0 +1,47 @@
+BootStrap: docker
+From: ubuntu:latest
+
+%post
+
+    ##install essentials
+    apt-get update
+    apt-get install -y wget bzip2 ca-certificates build-essential bash
+
+    ##install conda
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+    bash ~/miniconda.sh -b -p /opt/conda
+    rm ~/miniconda.sh
+
+    ##configure conda and create environment
+    /opt/conda/bin/conda init
+    /opt/conda/bin/conda install "python>=3.7"  samtools pysam minimap2 numpy=1.26.0 pandas editdistance -c bioconda -c conda-forge
+    /opt/conda/bin/conda install -c conda-forge r-base r-dplyr
+
+    ##install git
+    export DEBIAN_FRONTEND=noninteractive
+    apt install git-all -y
+
+    ##install and compile FLAMES software
+    git clone https://github.com/LuyiTian/FLAMES
+    g++ -std=c++11 -O2 -I /opt/conda/include -L /opt/conda//lib -o FLAMES/src/match_cell_barcode \
+        FLAMES/src/ssw/ssw_cpp.cpp FLAMES/src/ssw/ssw.c FLAMES/src/match_cell_barcode.cpp FLAMES/src/kseq.h \
+        FLAMES/src/edit_dist.cpp -lz
+
+    ##install gffcompare
+    git clone https://github.com/gpertea/gffcompare
+    cd gffcompare
+    make release
+    cd ..
+
+    #Add any other necessary commands here
+
+%environment
+    export PATH=/opt/conda/bin:$PATH
+    export PATH=/FLAMES/src/match_cell_barcode:$PATH
+    export PATH=/gffcompare/gffcompare:$PATH
+
+%runscript
+    # Add the script you want to run here
+
+%labels
+    Author: koehlek99

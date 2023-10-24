@@ -12,19 +12,18 @@ rule match_barcodes:
         barcode_stats="results/FLAMES/barcode_matching/ed{EDIST}/{SAMPLE}/{SAMPLE}_barcode.stats",
     params:
         umi_length=config["umi_length"],
-    conda:
-        "../envs/flames.yml"
-    #resources:
-    #    mem_gb=32,
-    #    runtime="2d"
+    singularity: 
+        "singularities/sc_wf.sif"
+    log: 
+        stdout="logs/FLAMES/barcode_matching/ed{EDIST}_{SAMPLE}.stdout", 
+        stderr="logs/FLAMES/barcode_matching/ed{EDIST}_{SAMPLE}.stderr",
     shell:
         """
-        touch results/FLAMES/barcode_matching/ed{wildcards.EDIST}/{wildcards.SAMPLE}/{wildcards.SAMPLE}_trimmed.fastq
-
-        #g++ -std=c++11 -lz -O2 -o resources/FLAMES/src/match_cell_barcode resources/FLAMES/src/ssw/ssw_cpp.cpp \
-        #    resources/FLAMES/src/ssw/ssw.c resources/FLAMES/src/match_cell_barcode.cpp resources/FLAMES/src/kseq.h resources/FLAMES/src/edit_dist.cpp
-        resources/FLAMES/src/bin/match_cell_barcode {input.longread_fastq} {output.barcode_stats} \
-            {output.trimmed_fastq} {input.shortread_barcodes} {wildcards.EDIST} {params.umi_length}
+        #touch {output.trimmed_fastq}
+        #touch {output.barcode_stats}
+        /FLAMES/src/match_cell_barcode {input.longread_fastq} {output.barcode_stats} \
+            {output.trimmed_fastq} {input.shortread_barcodes} {wildcards.EDIST} {params.umi_length} \
+            > {log.stdout} 2> {log.stderr}
         """
 
 rule sc_long_pipeline:
@@ -32,26 +31,27 @@ rule sc_long_pipeline:
         trimmed_fastq="results/FLAMES/barcode_matching/ed{EDIST}/{SAMPLE}/{SAMPLE}_trimmed.fastq",
         genes_gtf=config["genes_gtf"],
         genome_fa=config["genome_fa"],
-        config="resources/FLAMES/python/config_sclr_nanopore_default.json",
+        config="resources/FLAMES/config_sclr_nanopore_default.json",
     output:
-        out_dir="results/FLAMES/sc_long_pipeline/ed{EDIST}/{SAMPLE}",
+        out_dir=directory("results/FLAMES/sc_long_pipeline/ed{EDIST}/{SAMPLE}"),
         isoforms_filtered="results/FLAMES/sc_long_pipeline/ed{EDIST}/{SAMPLE}/isoform_annotated.filtered.gff3",
         genome_bam="results/FLAMES/sc_long_pipeline/ed{EDIST}/{SAMPLE}/align2genome_{SAMPLE}.bam",
         genome_bai="results/FLAMES/sc_long_pipeline/ed{EDIST}/{SAMPLE}/align2genome_{SAMPLE}.bam.bai",
         transcriptome_bai="results/FLAMES/sc_long_pipeline/ed{EDIST}/{SAMPLE}/realign2transcript.bam.bai",
         counts="results/FLAMES/sc_long_pipeline/ed{EDIST}/{SAMPLE}/transcript_count.csv.gz",
-    conda:
-        "../envs/flames.yml"
-    #resources:
-    #    mem_gb=32,
-    #    runtime="2d"
+    singularity: 
+        "singularities/sc_wf.sif"
+    log: 
+        stdout="logs/FLAMES/sc_long_pipeline/ed{EDIST}_{SAMPLE}.stdout", 
+        stderr="logs/FLAMES/sc_long_pipeline/ed{EDIST}_{SAMPLE}.stderr",
     shell:
         """
         ##run FLAMES single-cell, long-read pipeline
-        resources/FLAMES/python/sc_long_pipeline.py --infq {input.trimmed_fastq} --outdir $out \
-            --genomefa {input.genome_fa} --gff3 {input.genes_gtf} --config_file {input.config}
+        /FLAMES/python/sc_long_pipeline.py --infq {input.trimmed_fastq} --outdir {output.out_dir} \
+            --genomefa {input.genome_fa} --gff3 {input.genes_gtf} --config_file {input.config} \
+            > {log.stdout} 2> {log.stderr}
 
         ##rename output bam files to avoid downstream problems with merging
-        mv results/FLAMES/sc_long_pipeline/{wildcards.EDIST}/{wildcards.SAMPLE}/align2genome.bam {output.genome_bam}
-        mv results/FLAMES/sc_long_pipeline/{wildcards.EDIST}/{wildcards.SAMPLE}/align2genome.bam.bai {output.genome_bai}
+        mv results/FLAMES/sc_long_pipeline/ed{wildcards.EDIST}/{wildcards.SAMPLE}/align2genome.bam {output.genome_bam}
+        mv results/FLAMES/sc_long_pipeline/ed{wildcards.EDIST}/{wildcards.SAMPLE}/align2genome.bam.bai {output.genome_bai}
         """

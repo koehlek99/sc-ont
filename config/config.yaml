@@ -3,5 +3,5 @@ edit_distance: 1
 umi_length: 12 
 
 ##reference files 
-genes_gtf: "/sc-projects/sc-proj-dh-promethion/singlecell_10x/hg38_pathogens/fasta/genome.fa"
-genome_fa: "/sc-projects/sc-proj-dh-promethion/singlecell_10x/hg38_pathogens/genes/genes.gtf"
+genes_gtf: "/raid/users/krisi/sc-ont/data/hg38_pathogens/genes/genes.gtf"
+genome_fa: "/raid/users/krisi/sc-ont/data/hg38_pathogens/fasta/genome.fa"
