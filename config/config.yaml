@@ -5,3 +5,6 @@ umi_length: 12
 ##reference files 
 genes_gtf: "/raid/users/krisi/sc-ont/data/hg38_pathogens/genes/genes.gtf"
 genome_fa: "/raid/users/krisi/sc-ont/data/hg38_pathogens/fasta/genome.fa"
+
+##sqanti classification
+filteringMethod: "rules"

@@ -57,5 +57,14 @@ def get_final_output():
             EDIST=config["edit_distance"]
         ),
     ),
-    
+    final_output.extend(
+        expand("results/SQANTI/extractCounts/ed{EDIST}/TranscriptCountsPerSample.csv",
+            EDIST=config["edit_distance"]
+        ),
+    ),
+    final_output.extend(
+        expand("results/SQANTI/QC/ed{EDIST}/mergedIsoforms.combined_SQANTI3_report.html",
+            EDIST=config["edit_distance"]
+        ),
+    ),
     return final_output
