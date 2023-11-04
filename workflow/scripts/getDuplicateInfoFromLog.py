@@ -4,7 +4,7 @@ import re
 import os
 
 samples = pd.read_csv("config/samples.tsv", sep=",")['sample'].values
-os.mkdir(snakemake.output['duplicate_dir'])
+os.makedirs('results/gffcompare/ed' + str(snakemake.params['edist']) + '/duplicates', exist_ok=True)
 
 def extractDuplicateInformation(slurm_path,samples):
     lines = [line.rstrip('\n') for line in list(open(slurm_path))]
@@ -24,6 +24,6 @@ def extractDuplicateInformation(slurm_path,samples):
     
     for sample in duplicatesPerSample.keys():
         print(sample, ': ', duplicatesPerSample[sample].shape)
-        duplicatesPerSample[sample].to_csv(snakemake.output['duplicate_dir'] + '/duplicates_'+sample+'.tsv', sep='\t', index=False)
-
+        duplicatesPerSample[sample].to_csv('results/gffcompare/ed' + str(snakemake.params['edist']) + '/duplicates/duplicates_'+sample+'.tsv', sep='\t', index=False)
+        #duplicatesPerSample[sample].to_csv(snakemake.output['duplicate_df'], sep='\t', index=False)
 extractDuplicateInformation(snakemake.input['gfflog'], samples)

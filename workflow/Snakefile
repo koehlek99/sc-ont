@@ -1,6 +1,7 @@
 include: "rules/flames.smk"
 include: "rules/gffcompare.smk"
 include: "rules/output.smk"
+include: "rules/sqanti.smk"
 
 rule all:
     input:

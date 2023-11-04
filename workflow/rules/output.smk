@@ -48,8 +48,9 @@ def get_final_output():
         ),
     ),
     final_output.extend(
-        expand("results/gffcompare/ed{EDIST}/duplicates/",
-            EDIST=config["edit_distance"]
+        expand("results/gffcompare/ed{EDIST}/duplicates/duplicates_{SAMPLE}.tsv",
+            EDIST=config["edit_distance"],
+            SAMPLE=samples["sample"]
         ),
     ),
     final_output.extend(
@@ -65,6 +66,18 @@ def get_final_output():
     final_output.extend(
         expand("results/SQANTI/QC/ed{EDIST}/mergedIsoforms.combined_SQANTI3_report.html",
             EDIST=config["edit_distance"]
+        ),
+    ),
+    final_output.extend(
+        expand("results/SQANTI/Filtering/ed{EDIST}/{FILTER}/Flames_{FILTER}Filter_SQANTI3_filter_report.pdf",
+            EDIST=config["edit_distance"],
+            FILTER=config["filteringMethod"]
+        ),
+    ),
+    final_output.extend(
+        expand("results/SQANTI/Filtering/ed{EDIST}/{FILTER}/Flames_{FILTER}Filter_{FILTER}result_classification.txt",
+            EDIST=config["edit_distance"],
+            FILTER=config["filteringMethod"]
         ),
     ),
     return final_output

@@ -39,10 +39,13 @@ rule getDuplicateInfoFromSlurm:
     input: 
         gfflog="results/gffcompare/ed{EDIST}/gffcompare.log",
     output:
-        duplicate_dir=directory("results/gffcompare/ed{EDIST}/duplicates")
+        #duplicate_dir=directory("results/gffcompare/ed{EDIST}/duplicates"),
+        duplicate_df="results/gffcompare/ed{EDIST}/duplicates/duplicates_{SAMPLE}.tsv"
     log: 
-        stdout="logs/gffcompare/ed{EDIST}_getDuplicates.stdout", 
-        stderr="logs/gffcompare/ed{EDIST}_getDuplicates.stderr",  
+        stdout="logs/gffcompare/ed{EDIST}_getDuplicates_{SAMPLE}.stdout", 
+        stderr="logs/gffcompare/ed{EDIST}_getDuplicates_{SAMPLE}.stderr",  
+    params: 
+        edist=config["edit_distance"],
     singularity: 
         "singularities/sc_wf.sif"
     script:
@@ -59,6 +62,9 @@ rule processExpressionMatrices:
         trackingDf ="results/gffcompare/ed{EDIST}/mergedIsoforms.tracking",
     params: 
         edist=config["edit_distance"],
+    log: 
+        stdout="logs/gffcompare/ed{EDIST}_processExpressionMatrices.stdout", 
+        stderr="logs/gffcompare/ed{EDIST}_processExpressionMatrices.stderr", 
     output:
         collapsedExpressionMatrices="results/gffcompare/ed{EDIST}/collapsedExpressionMatrices.rds",
     singularity: 

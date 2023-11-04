@@ -1,0 +1,38 @@
+{
+    "full-splice_match": [
+        {
+            "perc_A_downstream_TTS":[0,59],
+            "within_CAGE_peak": "TRUE",
+            "polyA_motif_found":"TRUE"
+        },
+        {
+            "subcategory":"reference_match"
+        }           
+    ],
+    "rest": [
+        {
+            "perc_A_downstream_TTS":[0,59],
+            "all_canonical":"canonical",
+            "RTS_stage":"FALSE",
+            "polyA_motif_found":"TRUE",
+            "within_CAGE_peak":"TRUE",
+            "count_moderate_NS":[2,3]
+        },
+        {   
+            "perc_A_downstream_TTS":[0,59],
+            "RTS_stage":"FALSE",
+            "all_canonical":"canonical",
+            "polyA_motif_found":"TRUE",
+            "within_CAGE_peak":"TRUE",
+            "count_critical_NS":[5,6]
+        },
+        {
+            "perc_A_downstream_TTS":[0,59],
+            "RTS_stage":"FALSE",
+            "all_canonical":"canonical",
+            "polyA_motif_found":"TRUE",
+            "within_CAGE_peak":"TRUE",
+            "count_control_NS":[2,3]
+        }
+     ]
+}

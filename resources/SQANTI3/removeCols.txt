@@ -1,0 +1,3 @@
+count_moderate_NS
+count_critical_NS
+count_control_NS

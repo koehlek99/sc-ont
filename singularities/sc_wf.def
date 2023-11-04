@@ -14,12 +14,17 @@ From: ubuntu:latest
 
     ##configure conda and create environment
     /opt/conda/bin/conda init
-    /opt/conda/bin/conda install "python>=3.7"  samtools pysam minimap2 numpy=1.26.0 pandas editdistance -c bioconda -c conda-forge
-    #/opt/conda/bin/conda install -c conda-forge r-base r-dplyr
+    /opt/conda/bin/conda install r-seurat "python>=3.7"  samtools pysam minimap2 joblib numpy=1.24.0 pandas editdistance -c bioconda -c conda-forge 
 
     ##install git
     export DEBIAN_FRONTEND=noninteractive
     apt install git-all -y
+
+    ##install SQANTI3
+    wget https://github.com/ConesaLab/SQANTI3/archive/refs/tags/v5.2.tar.gz
+    tar -xvf v5.2.tar.gz
+    /opt/conda/bin/conda env update -n base --file /SQANTI3-5.2/SQANTI3.conda_env.yml
+    /opt/conda/bin/conda install r-seurat r-stringr -c bioconda 
 
     ##install and compile FLAMES software
     git clone https://github.com/LuyiTian/FLAMES
@@ -33,10 +38,7 @@ From: ubuntu:latest
     make release
     cd ..
 
-    ##install SQANTI3
-    wget https://github.com/ConesaLab/SQANTI3/archive/refs/tags/v5.2.tar.gz
-    tar -xvf v5.2.tar.gz
-    /opt/conda/bin/conda env update -n base --file /SQANTI3-5.2/SQANTI3.conda_env.yml
+    #sed -i -e 's/install.packages("RColorConesa")/install.packages("RColorConesa", repos ="https://cran.uni-muenster.de/")/g' /SQANTI3-5.2/utilities/report_filter/SQANTI3_filter_report.R
 
     ##install gtfToGenePred dependency
     wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/gtfToGenePred -P /SQANTI3/utilities/
@@ -44,10 +46,15 @@ From: ubuntu:latest
 
     ##install cDNA_Cupcake dependency
     git clone https://github.com/Magdoll/cDNA_Cupcake.git
-    #cd cDNA_Cupcake
-    #python setup.py build
-    #python setup.py install
+    cd cDNA_Cupcake
+    ##known bug during installation
+    sed -i -e 's/ext_modules = cythonize(ext_modules)/ext_modules = cythonize(ext_modules, language_level = "2")/g' setup.py
+    sed -i -e 's/sklearn/scikit-learn/g' setup.py
+    /opt/conda/bin/python setup.py build
+    /opt/conda/bin/python setup.py install
 
+    /opt/conda/bin/Rscript -e 'install.packages("RColorConesa", repos="https://cloud.r-project.org")'
+    #/opt/conda/bin/conda install -c conda-forge r-stringr
     #Add any other necessary commands here
 
 %environment

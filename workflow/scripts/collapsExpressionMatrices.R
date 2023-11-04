@@ -42,7 +42,7 @@ renameDuplicates <- function(transcript_counts, duplicate_dict_path){
 
     ##get indices in count dataframe for duplicated IDs
     indices = match(duplicate_df$dup1,transcript_counts$transcript_id)
-    
+
     ##replace duplicated IDs with mappings
     transcript_counts[indices,]$transcript_id = duplicate_df$dup2
     
