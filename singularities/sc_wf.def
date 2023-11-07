@@ -38,8 +38,6 @@ From: ubuntu:latest
     make release
     cd ..
 
-    #sed -i -e 's/install.packages("RColorConesa")/install.packages("RColorConesa", repos ="https://cran.uni-muenster.de/")/g' /SQANTI3-5.2/utilities/report_filter/SQANTI3_filter_report.R
-
     ##install gtfToGenePred dependency
     wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/gtfToGenePred -P /SQANTI3/utilities/
     chmod +x /SQANTI3/utilities/gtfToGenePred 
@@ -47,6 +45,7 @@ From: ubuntu:latest
     ##install cDNA_Cupcake dependency
     git clone https://github.com/Magdoll/cDNA_Cupcake.git
     cd cDNA_Cupcake
+    
     ##known bug during installation
     sed -i -e 's/ext_modules = cythonize(ext_modules)/ext_modules = cythonize(ext_modules, language_level = "2")/g' setup.py
     sed -i -e 's/sklearn/scikit-learn/g' setup.py
@@ -54,7 +53,6 @@ From: ubuntu:latest
     /opt/conda/bin/python setup.py install
 
     /opt/conda/bin/Rscript -e 'install.packages("RColorConesa", repos="https://cloud.r-project.org")'
-    #/opt/conda/bin/conda install -c conda-forge r-stringr
     #Add any other necessary commands here
 
 %environment

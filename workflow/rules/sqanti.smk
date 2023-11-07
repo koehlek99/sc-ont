@@ -33,7 +33,7 @@ rule sqanti_qc:
         stderr="logs/SQANTI/QC/ed{EDIST}/Sqanti_QC.stderr",
     shell:
         """
-        python SQANTI3-5.2/sqanti3_qc.py --force_id_ignore --CAGE_peak {input.refTSS} \
+        python /SQANTI3-5.2/sqanti3_qc.py --force_id_ignore --CAGE_peak {input.refTSS} \
             --fl_count {input.counts} --polyA_motif_list {input.polyA_motif} \
             -d {output.out_dir} -fl {input.counts} \
             {input.mergedGtf}  {input.genes_gtf} {input.genome_fa}
