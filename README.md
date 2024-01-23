@@ -70,4 +70,4 @@ The pipeline [FLAMES](https://doi.org/10.1186/s13059-021-02525-6 (Full-Length An
 
 ## Output
 
-This workflow outputs transcript x cell expression matrices per sample. Additionally, .gtf files containing sample-specific transcript annotations and a merged .gtf file containing transcripts identified from all samples are generated. Expression matrices can be aggregated to gene-level and analyzed using traditional single-cell analysis software such as Seurat. 
+This workflow outputs transcript x cell expression matrices per sample. Additionally, .gtf files containing sample-specific transcript annotations and a merged .gtf file containing transcripts identified from all samples are generated. Expression matrices can be aggregated to gene-level and analyzed using traditional single-cell analysis software such as Seurat. Additionally, SQANTI generates classification files containing QC features and filtering results. 
