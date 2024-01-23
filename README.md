@@ -4,7 +4,7 @@
 
 
 This workflow enables an analysis of long-read, scRNA-seq data generated with 10x Genomics single-cell protocols and nanopore sequencing. It utilizes the single-cell, long-read pipeline FLAMES to identify and quantify transcripts on a single-cell level.
-Integration of data from multiple samples is performed using GffCompare that compares structures of identified transcript models between samples. Based on GffCompare's output, transcript IDs are adapted and can be used for downstream analyses, e.g. for traditional single-cell analysis with Seurat. 
+Integration of data from multiple samples is performed using GffCompare that compares structures of identified transcript models between samples. Based on GffCompare's output, transcript IDs are adapted and expression matrices can be used for downstream analyses, e.g. for traditional single-cell analysis with Seurat. 
 Since long-read, scRNA-seq experiments introduce a lot of noise, thorough quality control of identified transcript models is recommend. Therefore, the SQANTI3 was integrated into this pipeline. It computes various QC metrics and implements two filtering methods to separate true isoforms from technical artefacts. 
 
 
